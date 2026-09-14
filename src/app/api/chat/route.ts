@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { hybridSearch, CONFIDENCE_THRESHOLD } from "@/lib/search";
+import { retrieve, CONFIDENCE_THRESHOLD } from "@/lib/search";
 import { synthesizeAnswer, LLM_CONFIGURED } from "@/lib/llm";
 import { languages, LanguageCode } from "@/data/languages";
+import { JURISDICTION_LABELS, Jurisdiction } from "@/lib/jurisdiction";
 
 export type ChatSource = {
   id: string;
@@ -17,6 +18,9 @@ export type ChatResponse = {
   confident: boolean;
   llmSynthesized: boolean;
   sources: ChatSource[];
+  jurisdiction: Jurisdiction;
+  jurisdictionLabel: string;
+  candidatesConsidered: number;
 };
 
 export async function POST(req: NextRequest) {
@@ -36,7 +40,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Query is too long" }, { status: 400 });
   }
 
-  const results = hybridSearch(query, 4);
+  const { results, jurisdiction, candidatesConsidered } = retrieve(query, 4);
   const topScore = results[0]?.score ?? 0;
   const confident = results.length > 0 && topScore >= CONFIDENCE_THRESHOLD;
 
@@ -80,6 +84,9 @@ export async function POST(req: NextRequest) {
       text: r.text,
       score: Math.round(r.score * 100) / 100,
     })),
+    jurisdiction,
+    jurisdictionLabel: JURISDICTION_LABELS[jurisdiction],
+    candidatesConsidered,
   };
 
   return NextResponse.json(response);

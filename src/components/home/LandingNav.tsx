@@ -1,10 +1,17 @@
+import Link from "next/link";
 import { Leaf, ArrowUpRight } from "lucide-react";
 
-const links = [
+const sectionLinks = [
   { href: "#why", label: "Why it matters" },
   { href: "#workflow", label: "How it works" },
   { href: "#trust", label: "Trust & evidence" },
   { href: "#rollout", label: "Roadmap" },
+];
+
+const toolLinks = [
+  { href: "/chat", label: "Assistant" },
+  { href: "/wizard", label: "Wizard" },
+  { href: "/lookup", label: "Lookup" },
 ];
 
 export function LandingNav() {
@@ -23,7 +30,7 @@ export function LandingNav() {
       </a>
 
       <nav className="hidden items-center gap-8 md:flex">
-        {links.map((l) => (
+        {sectionLinks.map((l) => (
           <a
             key={l.href}
             href={l.href}
@@ -31,6 +38,16 @@ export function LandingNav() {
           >
             {l.label}
           </a>
+        ))}
+        <span className="h-4 w-px bg-[#f5f0e4]/15" />
+        {toolLinks.map((l) => (
+          <Link
+            key={l.href}
+            href={l.href}
+            className="text-sm text-[#dca12f] transition-colors hover:text-[#e2b65d]"
+          >
+            {l.label}
+          </Link>
         ))}
       </nav>
 

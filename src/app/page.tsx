@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   Network,
   Globe,
@@ -13,6 +14,9 @@ import {
   Quote,
   ArrowUpRight,
   ArrowDown,
+  MessageCircle,
+  Compass,
+  Leaf,
 } from "lucide-react";
 import { LandingNav } from "@/components/home/LandingNav";
 import { LandingFooter } from "@/components/home/LandingFooter";
@@ -131,6 +135,27 @@ const rollout = [
     body: "Publish learnings, source updates, and safeguards so the system can be scrutinised.",
     caption: "Governance · maintenance · scale",
     featured: false,
+  },
+];
+
+const tools = [
+  {
+    href: "/chat",
+    icon: MessageCircle,
+    title: "Ask the Assistant",
+    body: "The full chat — hybrid retrieval, jurisdiction routing, and every answer cited back to its source.",
+  },
+  {
+    href: "/wizard",
+    icon: Compass,
+    title: "Compliance Wizard",
+    body: "A branching questionnaire that turns 'what am I protecting?' into a step-by-step roadmap.",
+  },
+  {
+    href: "/lookup",
+    icon: Leaf,
+    title: "Herb & IP Lookup",
+    body: "Trace a local herb name through Sanskrit and botanical naming to the IP considerations that follow.",
   },
 ];
 
@@ -373,6 +398,42 @@ export default function Home() {
           <Reveal>
             <DemoWidget />
           </Reveal>
+        </div>
+      </section>
+
+      {/* THE FULL TOOL — this demo is a taster; these are the real, working pages */}
+      <section className="bg-[#f3eddf] px-6 py-20 sm:px-10 lg:px-16">
+        <div className="mx-auto max-w-[1400px]">
+          <Reveal>
+            <p className="flex items-center gap-2 font-mono text-xs tracking-[0.2em] text-[#122d31]/40">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#dca12f]" />
+              BEYOND THE DEMO
+            </p>
+            <h2 className="mt-4 font-[family-name:var(--font-instrument-serif)] text-3xl leading-[1.15] text-[#122d31] sm:text-4xl">
+              The demo above is a taster. Open the full tool.
+            </h2>
+          </Reveal>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+            {tools.map((tool, i) => (
+              <Reveal key={tool.href} delay={i * 100}>
+                <Link
+                  href={tool.href}
+                  className="group flex h-full flex-col rounded-2xl border border-[#122d31]/10 bg-[#fbf8f0] p-6 transition-colors hover:border-[#dca12f]/60"
+                >
+                  <tool.icon className="h-5 w-5 text-[#53775f]" strokeWidth={1.5} />
+                  <h3 className="mt-6 flex items-center gap-1.5 text-lg font-semibold text-[#122d31]">
+                    {tool.title}
+                    <ArrowUpRight
+                      className="h-4 w-4 text-[#122d31]/30 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#dca12f]"
+                      strokeWidth={2}
+                    />
+                  </h3>
+                  <p className="mt-2 text-sm text-[#122d31]/60">{tool.body}</p>
+                </Link>
+              </Reveal>
+            ))}
+          </div>
         </div>
       </section>
 

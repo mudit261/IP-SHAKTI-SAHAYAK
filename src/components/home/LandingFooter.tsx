@@ -1,9 +1,10 @@
+import Link from "next/link";
 import { Leaf, Play } from "lucide-react";
 
 export function LandingFooter() {
   return (
     <footer className="bg-[#122d31] px-6 pb-10 pt-16 sm:px-10 lg:px-16">
-      <div className="mx-auto grid max-w-[1400px] gap-12 sm:grid-cols-[1.4fr_1fr_1fr]">
+      <div className="mx-auto grid max-w-[1400px] gap-12 sm:grid-cols-[1.4fr_1fr_1fr_1fr]">
         <div>
           <div className="flex items-center gap-3">
             <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#dca12f] text-[#122d31]">
@@ -39,6 +40,27 @@ export function LandingFooter() {
               <a href="#trust" className="hover:text-[#f5f0e4]">
                 Trust &amp; evidence
               </a>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <p className="font-mono text-xs tracking-[0.2em] text-[#dca12f]">THE FULL TOOL</p>
+          <ul className="mt-4 space-y-3 text-sm text-[#f5f0e4]/70">
+            <li>
+              <Link href="/chat" className="hover:text-[#f5f0e4]">
+                Ask the Assistant
+              </Link>
+            </li>
+            <li>
+              <Link href="/wizard" className="hover:text-[#f5f0e4]">
+                Compliance Wizard
+              </Link>
+            </li>
+            <li>
+              <Link href="/lookup" className="hover:text-[#f5f0e4]">
+                Herb &amp; IP Lookup
+              </Link>
             </li>
           </ul>
         </div>

@@ -12,6 +12,8 @@ type Message = {
   confident?: boolean;
   llmSynthesized?: boolean;
   sources?: ChatSource[];
+  jurisdictionLabel?: string;
+  candidatesConsidered?: number;
 };
 
 const SUGGESTIONS = [
@@ -67,6 +69,8 @@ export default function ChatPage() {
           confident: data.confident,
           llmSynthesized: data.llmSynthesized,
           sources: data.sources,
+          jurisdictionLabel: data.jurisdictionLabel,
+          candidatesConsidered: data.candidatesConsidered,
         },
       ]);
       speak(data.answer, activeLanguage.speechLocale);
@@ -107,6 +111,13 @@ export default function ChatPage() {
                 <span className="mb-1 inline-block rounded-full bg-teal-500/15 px-2 py-0.5 text-[11px] font-medium text-teal-400">
                   {m.llmSynthesized ? "Grounded · AI-synthesized" : "Grounded · extractive"}
                 </span>
+              )}
+              {m.role === "assistant" && m.jurisdictionLabel && (
+                <p className="mb-1.5 font-mono text-[10px] uppercase tracking-wide text-slate-500">
+                  Routed as: {m.jurisdictionLabel}
+                  {typeof m.candidatesConsidered === "number" &&
+                    ` · ${m.candidatesConsidered} candidates retrieved → reranked`}
+                </p>
               )}
               <p className="whitespace-pre-wrap">{m.text}</p>
 
